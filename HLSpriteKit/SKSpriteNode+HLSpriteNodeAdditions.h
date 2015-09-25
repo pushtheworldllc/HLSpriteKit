@@ -66,4 +66,6 @@
                             color:(UIColor *)color
                              blur:(CGFloat)blur;
 
+//@property (nonatomic, assign) NSUInteger tag;
+
 @end

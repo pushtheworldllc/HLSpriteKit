@@ -43,6 +43,11 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   HLMenu *_currentMenu;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@\nCurrent Menu: %@\n",[super description],_currentMenu];
+}
+
+
 - (instancetype)init
 {
   self = [super init];

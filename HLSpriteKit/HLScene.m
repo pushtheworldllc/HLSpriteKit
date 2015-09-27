@@ -150,6 +150,7 @@ static BOOL _sceneAssetsLoaded = NO;
 {
   [super willMoveFromView:view];
   if (_sharedGestureRecognizers) {
+//      NSLog(@"Scene moved from view.");
     for (UIGestureRecognizer *sharedGestureRecognizer in _sharedGestureRecognizers) {
       [view removeGestureRecognizer:sharedGestureRecognizer];
     }
@@ -457,7 +458,7 @@ static BOOL _sceneAssetsLoaded = NO;
 
   node.zPosition = (zPositionMax - zPositionMin);
   [_modalPresentationNode addChild:node];
-
+  _modalPresentationNode.position   = CGPointMake(self.size.width / 2.0f, self.size.height / 2.0f);
   switch (animation) {
     case HLScenePresentationAnimationFade:
       // TODO: Hack fix for iOS8; when fading in from (the intended) alpha 0.0f this crashes with EXC_BAD_ACCESS.

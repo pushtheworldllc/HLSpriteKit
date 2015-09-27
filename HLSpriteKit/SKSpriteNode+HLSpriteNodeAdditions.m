@@ -91,4 +91,12 @@ static const CGFloat HLBlurEpsilon = 0.001f;
   return blurNode;
 }
 
+//- (void)setTag:(NSUInteger)tag {
+//    self.tag = tag;
+//}
+//
+//- (NSUInteger)tag {
+//    return self.tag;
+//}
+
 @end

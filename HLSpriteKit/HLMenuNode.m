@@ -20,9 +20,6 @@ enum {
 static void
 HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
 {
-  if (![buttonPrototype respondsToSelector:@selector(setText:)]) {
-    [NSException raise:@"HLMenuNodeInvalidButtonPrototype" format:@"Button prototype for \"%@\" must respond to selector \"setText:\".", label];
-  }
   if (![buttonPrototype respondsToSelector:@selector(size)]) {
     [NSException raise:@"HLMenuNodeInvalidButtonPrototype" format:@"Button prototype for \"%@\" must respond to selector \"size\".", label];
   }
@@ -45,6 +42,11 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   SKNode *_buttonsNode;
   HLMenu *_currentMenu;
 }
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@\nCurrent Menu: %@\n",[super description],_currentMenu];
+}
+
 
 - (instancetype)init
 {
@@ -276,6 +278,9 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   _buttonsNode = [SKNode node];
   [self addChild:_buttonsNode];
 
+  id <HLMenuNodeDelegate> delegate = _delegate;
+  BOOL delegateRespondsToWillDisplayButton = [delegate respondsToSelector:@selector(menuNode:willDisplayButton:forMenuItem:itemIndex:)];
+
   CGFloat widthMax = 0.0f;
   CGFloat heightTotal = 0.0f;
   NSUInteger itemCount = [_currentMenu itemCount];
@@ -298,7 +303,14 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
     }
 
     SKNode *buttonNode = [buttonPrototype copy];
-    [(id)buttonNode setText:item.text];
+    if ([buttonPrototype respondsToSelector:@selector(setText:)]) {
+      [(id)buttonNode setText:item.text];
+    }
+
+    if (delegate && delegateRespondsToWillDisplayButton) {
+      [delegate menuNode:self willDisplayButton:buttonNode forMenuItem:item itemIndex:i];
+    }
+
     [_buttonsNode addChild:buttonNode];
 
     CGSize buttonSize = [(id)buttonNode size];

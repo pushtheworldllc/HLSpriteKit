@@ -154,7 +154,7 @@ enum {
 - (void)setSelectionForItem:(int)itemIndex
 {
   if (_selectionItemIndex >= 0) {
-    HLItemNode *itemNode = self.children[_selectionItemIndex];
+    HLItemNode *itemNode = (HLItemNode *)self.children[_selectionItemIndex];
     itemNode.highlight = NO;
   }
   NSUInteger itemsCount = [self.children count];
@@ -173,7 +173,7 @@ enum {
                  completion:(void (^)(void))completion
 {
   if (_selectionItemIndex >= 0) {
-    HLItemNode *itemNode = self.children[_selectionItemIndex];
+    HLItemNode *itemNode = (HLItemNode *)self.children[_selectionItemIndex];
     itemNode.highlight = NO;
   }
   NSUInteger itemsCount = [self.children count];

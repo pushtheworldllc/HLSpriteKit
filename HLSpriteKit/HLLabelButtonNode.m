@@ -5,7 +5,7 @@
 //  Created by Karl Voskuil on 5/2/14.
 //  Copyright (c) 2014 Hilo Games. All rights reserved.
 //
-
+#import "SISpriteButton.h"
 #import "HLLabelButtonNode.h"
 
 enum {
@@ -22,7 +22,7 @@ enum {
   // properties).  If that's ever changed in the future, it would probably be easier to
   // merge the background node and the HLLabelButtonNode again (so that fewer properties
   // need to be wrapped in accessors/mutators).
-  SKSpriteNode *_backgroundNode;
+  SISpriteButton *_backgroundNode;
   SKLabelNode *_labelNode;
 }
 CGFloat const kPointEpsilon = 0.01;
@@ -31,7 +31,8 @@ CGFloat const kPointEpsilon = 0.01;
 {
   self = [super init];
   if (self) {
-    _backgroundNode = [SKSpriteNode spriteNodeWithColor:color size:size];
+    _backgroundNode = [SISpriteButton spriteNodeWithColor:color size:size];
+    _backgroundNode.userInteractionEnabled  = YES;
     _backgroundNode.zPosition = HLLabelButtonNodeZPositionLayerBackground * self.zPositionScale / HLLabelButtonNodeZPositionLayerCount;
     [self addChild:_backgroundNode];
       
@@ -44,7 +45,7 @@ CGFloat const kPointEpsilon = 0.01;
 {
   self = [super init];
   if (self) {
-    _backgroundNode = [SKSpriteNode spriteNodeWithTexture:texture];
+    _backgroundNode = [SISpriteButton spriteNodeWithTexture:texture];
     _backgroundNode.zPosition = HLLabelButtonNodeZPositionLayerBackground * self.zPositionScale / HLLabelButtonNodeZPositionLayerCount;
     [self addChild:_backgroundNode];
     [self HL_labelButtonNodeInitCommon];
@@ -56,7 +57,7 @@ CGFloat const kPointEpsilon = 0.01;
 {
   self = [super init];
   if (self) {
-    _backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:name];
+    _backgroundNode = [SISpriteButton spriteNodeWithImageNamed:name];
     _backgroundNode.zPosition = HLLabelButtonNodeZPositionLayerBackground * self.zPositionScale / HLLabelButtonNodeZPositionLayerCount;
     [self addChild:_backgroundNode];
     [self HL_labelButtonNodeInitCommon];
@@ -75,6 +76,7 @@ CGFloat const kPointEpsilon = 0.01;
   _borderColor = nil;
   _borderWidth = 0.0f;
   _labelNode = [SKLabelNode labelNodeWithFontNamed:@"Helvetica"];
+  _labelNode.userInteractionEnabled = YES;
   _labelNode.zPosition = HLLabelButtonNodeZPositionLayerLabel * self.zPositionScale / HLLabelButtonNodeZPositionLayerCount;
   [self addChild:_labelNode];
   [self HL_layout];
@@ -130,7 +132,7 @@ CGFloat const kPointEpsilon = 0.01;
   // guess this is why finding nodes by name is recommended.)
   for (SKNode *child in copy.children) {
     if ([child isKindOfClass:[SKSpriteNode class]]) {
-      copy->_backgroundNode = (SKSpriteNode *)child;
+      copy->_backgroundNode = (SISpriteButton *)child;
     } else if ([child isKindOfClass:[SKLabelNode class]]) {
       copy->_labelNode = (SKLabelNode *)child;
     }
@@ -411,4 +413,6 @@ CGFloat const kPointEpsilon = 0.01;
     
     return texture;
 }
+
+
 @end

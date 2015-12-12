@@ -68,7 +68,7 @@ enum {
 
 - (void)setZPositionScale:(CGFloat)zPositionScale
 {
-  super.zPositionScale = zPositionScale;
+  [super setZPositionScale:zPositionScale];
   [self HL_layoutZ];
 }
 
